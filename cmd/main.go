@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"../chatbot"
+	"../cmd/commands"
 	"../model"
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )
@@ -44,29 +45,10 @@ func main() {
 	for {
 		select {
 		case update := <-uch:
-			// setup userInfo structure with user information
-			userInfo, err := chatbot.SetupUserInfo(update.Message.From)
+			err := commands.SelectCommandsList(bot, &update)
 			if err != nil {
-				log.Println("SetupUserInfo error")
+				log.Println(err)
 			}
-
-			// Chat or dialog ID
-			// It can be privet chat ID (then it is equal to UserID)
-			// or public chat/channel ID
-			ChatID := update.Message.Chat.ID
-
-			// Message text
-			Text := update.Message.Text
-
-			log.Printf("[%s] %d %s", userInfo.Login, ChatID, Text)
-
-			// Reply to user
-			reply := chatbot.CreateReply(userInfo)
-
-			// Create message
-			msg := tgbotapi.NewMessage(ChatID, reply)
-			// and send it
-			_, err = bot.Send(msg)
 		}
 
 	}
