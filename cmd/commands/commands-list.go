@@ -14,7 +14,10 @@ func SelectCommandsList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 	case "/weather":
 		err := getWeather(bot, update)
 		return checkError(err)
-	case "/all":
+	case "/joke":
+		err := getJoke(bot, update)
+		return checkError(err)
+	case "/help":
 		err := GetCommandList(bot, update)
 		return checkError(err)
 	default:
@@ -24,9 +27,11 @@ func SelectCommandsList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 }
 
 func GetCommandList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
-	allCommands := "/hello\r\n" + "/weather"
+	help := fmt.Sprintf("/hello - I want to say hello to you!\n")
+	help += fmt.Sprintf("/weather - I want to show you the weather!\n")
+	help += fmt.Sprintf("/joke - I want to show you very funny joke!\n")
 
-	_, err := bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, allCommands))
+	_, err := bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, help))
 	if err != nil {
 		return fmt.Errorf("replyForCommands Send error %w", err)
 	}

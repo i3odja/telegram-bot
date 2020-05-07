@@ -3,6 +3,7 @@ package commands
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"time"
@@ -10,6 +11,8 @@ import (
 	"../../model"
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )
+
+const weatherHost = "api.openweathermap.org/data/2.5/weather"
 
 func getWeather(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 	update.Message.Text = "Thank you!"
@@ -63,7 +66,6 @@ func makeReplyWeather(data *model.DataWeather) string {
 }
 
 func createURL() (*url.URL, error) {
-	weatherHost := "api.openweathermap.org/data/2.5/weather"
 	appID := "db9a441fce153ac5701b2235510e4d1b"
 	city := "Lviv"
 
@@ -87,23 +89,11 @@ func createURL() (*url.URL, error) {
 }
 
 func sendRequest(url *url.URL) ([]byte, error) {
-	resp, err := http.Get("http://" + url.String())
+	resp, err := http.Get("https://" + url.String())
 	if err != nil {
-
 		return nil, fmt.Errorf("sendRequest Get error %w", err)
 	}
 	defer resp.Body.Close()
 
-	bs := make([]byte, 1014)
-
-	for true {
-		n, err := resp.Body.Read(bs)
-		fmt.Println(string(bs[:n]))
-		bs = bs[:n]
-		if n == 0 || err != nil {
-			break
-		}
-	}
-
-	return bs, nil
+	return ioutil.ReadAll(resp.Body)
 }
