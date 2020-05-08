@@ -30,6 +30,12 @@ func getJoke(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 	}
 	fmt.Println(dataJoke)
 
+	text := tgbotapi.NewMessage(update.Message.Chat.ID, "Ваш анекдот готовий!")
+	_, err = bot.Send(text)
+	if err != nil {
+		return fmt.Errorf("getWeather Send error %w", err)
+	}
+
 	reply := makeReplyJoke(dataJoke)
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, reply)
 
@@ -41,10 +47,8 @@ func getJoke(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 	return nil
 }
 
-func makeReplyJoke(data *model.Joke) string {
-	reply := "Ваш анекдот готовий!\n\n"
+func makeReplyJoke(data *model.Joke) (reply string) {
+	reply = data.Value
 
-	reply += data.Value
-
-	return reply
+	return
 }

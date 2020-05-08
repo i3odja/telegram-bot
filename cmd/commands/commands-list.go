@@ -20,6 +20,9 @@ func SelectCommandsList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 	case "picture":
 		err := getPicture(bot, update)
 		return checkError(err)
+	case "currency":
+		err := Currency(bot, update)
+		return checkError(err)
 	case "help":
 		err := GetCommandList(bot, update)
 		return checkError(err)
@@ -34,6 +37,7 @@ func GetCommandList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 	help += fmt.Sprintf("/weather - I want to show you the weather!\n")
 	help += fmt.Sprintf("/joke - I want to show you very funny joke!\n")
 	help += fmt.Sprintf("/picture - I want to show you very interesting picture!\n")
+	help += fmt.Sprintf("/currency - I want to show you the current currency!\n")
 
 	_, err := bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, help))
 	if err != nil {

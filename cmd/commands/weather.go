@@ -37,6 +37,12 @@ func getWeather(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 	}
 	fmt.Println(dataWeather)
 
+	text := tgbotapi.NewMessage(update.Message.Chat.ID, "Ваш прогноз погоди готовий!\n\n")
+	_, err = bot.Send(text)
+	if err != nil {
+		return fmt.Errorf("getWeather Send error %w", err)
+	}
+
 	reply := makeReplyWeather(dataWeather)
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, reply)
 
@@ -48,9 +54,7 @@ func getWeather(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 	return nil
 }
 
-func makeReplyWeather(data *model.DataWeather) string {
-	reply := "Ваш прогноз погоди готовий!\n\n"
-
+func makeReplyWeather(data *model.DataWeather) (reply string) {
 	reply += fmt.Sprintf("Місто \t%s", data.Name)
 
 	y, m, d := time.Now().Date()
@@ -62,7 +66,7 @@ func makeReplyWeather(data *model.DataWeather) string {
 
 	reply += fmt.Sprintf("\nШвидкість вітру %v м/с", data.Wind.Speed)
 
-	return reply
+	return
 }
 
 func createURL() (*url.URL, error) {
