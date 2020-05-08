@@ -7,17 +7,20 @@ import (
 )
 
 func SelectCommandsList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
-	switch update.Message.Text {
-	case "/hello":
+	switch update.Message.Command() {
+	case "hello":
 		err := greeter(bot, *update)
 		return checkError(err)
-	case "/weather":
+	case "weather":
 		err := getWeather(bot, update)
 		return checkError(err)
-	case "/joke":
+	case "joke":
 		err := getJoke(bot, update)
 		return checkError(err)
-	case "/help":
+	case "picture":
+		err := getPicture(bot, update)
+		return checkError(err)
+	case "help":
 		err := GetCommandList(bot, update)
 		return checkError(err)
 	default:
@@ -30,6 +33,7 @@ func GetCommandList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 	help := fmt.Sprintf("/hello - I want to say hello to you!\n")
 	help += fmt.Sprintf("/weather - I want to show you the weather!\n")
 	help += fmt.Sprintf("/joke - I want to show you very funny joke!\n")
+	help += fmt.Sprintf("/picture - I want to show you very interesting picture!\n")
 
 	_, err := bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, help))
 	if err != nil {
