@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"../chatbot"
 	"../cmd/commands"
@@ -9,14 +10,13 @@ import (
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )
 
-const (
-	botToken = "1161561075:AAG6WNCUAgAH0V-l5CG2QGo5smCzELERSow"
-)
-
 func main() {
-	// setup chat bot token
+	if os.Getenv("TOKEN_TG_BOT") == "" {
+		log.Println("Sorry! But invalid telegram token! =(")
+		os.Exit(1)
+	}
 	chatBot := model.Bot{
-		Token: botToken,
+		Token: os.Getenv("TOKEN_TG_BOT"),
 	}
 
 	// connection to bot with token

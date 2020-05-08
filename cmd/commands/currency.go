@@ -35,7 +35,7 @@ func Currency(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 		return fmt.Errorf("getWeather Send error %w", err)
 	}
 
-	reply := makeReplyCurrency(dataCurrency)
+	reply := MakeReplyCurrency(dataCurrency)
 
 	for _, v := range reply {
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, v)
@@ -48,7 +48,7 @@ func Currency(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 	return nil
 }
 
-func makeReplyCurrency(data []model.Currency) (reply []string) {
+func MakeReplyCurrency(data []model.Currency) (reply []string) {
 	for _, v := range data {
 		if v.CC == "USD" {
 			text := fmt.Sprintf("%v\n", v.TXT)
