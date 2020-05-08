@@ -12,7 +12,11 @@ func SelectCommandsList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 		err := greeter(bot, *update)
 		return checkError(err)
 	case "weather":
-		err := getWeather(bot, update)
+		city := update.Message.CommandArguments()
+		if city == "" {
+			city = "Lviv"
+		}
+		err := getWeather(city, bot, update)
 		return checkError(err)
 	case "joke":
 		err := getJoke(bot, update)
@@ -33,7 +37,8 @@ func SelectCommandsList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 }
 
 func GetCommandList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
-	help := fmt.Sprintf("/hello - I want to say hello to you!\n")
+	help := fmt.Sprintf("/help - I will show you all available commands!\n")
+	help += fmt.Sprintf("/hello - I want to say hello to you!\n")
 	help += fmt.Sprintf("/weather - I want to show you the weather!\n")
 	help += fmt.Sprintf("/joke - I want to show you very funny joke!\n")
 	help += fmt.Sprintf("/picture - I want to show you very interesting picture!\n")

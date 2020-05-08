@@ -11,6 +11,7 @@ import (
 )
 
 func main() {
+	os.Setenv("TOKEN_TG_BOT", "1161561075:AAG6WNCUAgAH0V-l5CG2QGo5smCzELERSow")
 	if os.Getenv("TOKEN_TG_BOT") == "" {
 		log.Println("Sorry! But invalid telegram token! =(")
 		os.Exit(1)
