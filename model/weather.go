@@ -22,8 +22,8 @@ type DataWeather struct {
 	}
 	Visibility int `json:"visibility"`
 	Wind       struct {
-		Speed int `json:"speed"`
-		Deg   int `json:"deg"`
+		Speed float32 `json:"speed"`
+		Deg   float32 `json:"deg"`
 	}
 	Clouds struct {
 		All int `json:"all"`
