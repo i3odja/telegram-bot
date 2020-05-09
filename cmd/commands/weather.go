@@ -95,15 +95,15 @@ func makeReplyWeather(data *model.DataWeather) (reply string) {
 		feelsTemp = fmt.Sprintf("%v", int(data.Main.TemperatureFeels))
 	}
 
-	reply += fmt.Sprintf("\nТемпература повітря %s С", temp)
-	reply += fmt.Sprintf("\nМін: %s С Макс: %s C", minTemp, maxTemp)
-	reply += fmt.Sprintf("\nВідчувається наче %s С", feelsTemp)
+	reply += fmt.Sprintf("\n🌡 Температура повітря %s С", temp)
+	reply += fmt.Sprintf("\n🌡 Мін: %s С Макс: %s C", minTemp, maxTemp)
+	reply += fmt.Sprintf("\n🌡 Відчувається наче %s С", feelsTemp)
 
 	reply += fmt.Sprintf("\nВологість повітря %d %%", data.Main.Humidity)
 
 	reply += fmt.Sprintf("\n%s", data.Weather[0].Description)
 
-	reply += fmt.Sprintf("\nШвидкість вітру %v км/год", data.Wind.Speed)
+	reply += fmt.Sprintf("\nШвидкість вітру ⛈ %v км/год", data.Wind.Speed)
 
 	return
 }

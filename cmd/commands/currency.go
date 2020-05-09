@@ -29,7 +29,7 @@ func Currency(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 		return fmt.Errorf("getJoke JSON Unmarshal error %w", err)
 	}
 
-	text := tgbotapi.NewMessage(update.Message.Chat.ID, "Ваш курс валют на сьогодні готовий!")
+	text := tgbotapi.NewMessage(update.Message.Chat.ID, "💵 Ваш курс валют на сьогодні готовий!")
 	_, err = bot.Send(text)
 	if err != nil {
 		return fmt.Errorf("getWeather Send error %w", err)
@@ -37,12 +37,16 @@ func Currency(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 
 	reply := MakeReplyCurrency(dataCurrency)
 
+	res := fmt.Sprintf("Станом на %v\n\n", dataCurrency[0].Exchangedate)
 	for _, v := range reply {
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, v)
-		_, err = bot.Send(msg)
-		if err != nil {
-			return fmt.Errorf("getWeather Send error %w", err)
-		}
+		res += v
+	}
+
+	msg := tgbotapi.NewMessage(update.Message.Chat.ID, res)
+
+	_, err = bot.Send(msg)
+	if err != nil {
+		return fmt.Errorf("getWeather Send error %w", err)
 	}
 
 	return nil
@@ -50,16 +54,21 @@ func Currency(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 
 func MakeReplyCurrency(data []model.Currency) (reply []string) {
 	for _, v := range data {
-		if v.CC == "USD" {
+		if v.CC == "USD" || v.CC == "EUR" || v.CC == "RUB" || v.CC == "PLN" {
+			if v.CC == "USD" {
+				v.TXT = fmt.Sprintf("🇺🇸 %v", v.TXT)
+			}
+			if v.CC == "EUR" {
+				v.TXT = fmt.Sprintf("🇪🇺 %v", v.TXT)
+			}
+			if v.CC == "RUB" {
+				v.TXT = fmt.Sprintf("🇷🇺 %v", v.TXT)
+			}
+			if v.CC == "PLN" {
+				v.TXT = fmt.Sprintf("🇵🇱 %v", v.TXT)
+			}
 			text := fmt.Sprintf("%v\n", v.TXT)
-			text += fmt.Sprintf("Станом на %v\n", v.Exchangedate)
-			text += fmt.Sprintf("Курс: %v\n", v.Rate)
-			reply = append(reply, text)
-		}
-		if v.CC == "EUR" {
-			text := fmt.Sprintf("%v\n", v.TXT)
-			text += fmt.Sprintf("Станом на %v\n", v.Exchangedate)
-			text += fmt.Sprintf("Курс: %v\n", v.Rate)
+			text += fmt.Sprintf("Курс: %v\n\n", v.Rate)
 			reply = append(reply, text)
 		}
 	}
