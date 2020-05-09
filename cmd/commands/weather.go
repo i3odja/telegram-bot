@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 
 	"../../model"
@@ -15,9 +16,21 @@ import (
 const weatherHost = "api.openweathermap.org/data/2.5/weather"
 
 func getWeather(city string, bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
-	update.Message.Text = "Thank you!"
+	appID := os.Getenv("APP_ID")
+	if appID == "" {
+		warnning := fmt.Sprintf("‼️ упс... ‼️ Щось пішло не так. Сервіс прогнозу погоди працює не корекно. Я виправлю це найближчим часом ❌")
 
-	urlWeather, err := createURL(city)
+		msg := tgbotapi.NewMessage(update.Message.Chat.ID, warnning)
+
+		_, err := bot.Send(msg)
+		if err != nil {
+			return fmt.Errorf("getWeather Getenv Send error %w", err)
+		}
+
+		return fmt.Errorf("sorry, but you did not setup APP_ID, please fix it")
+	}
+
+	urlWeather, err := createURL(appID, city)
 	if err != nil {
 		return fmt.Errorf("getWeather createURL error %w", err)
 	}
@@ -108,9 +121,7 @@ func makeReplyWeather(data *model.DataWeather) (reply string) {
 	return
 }
 
-func createURL(city string) (*url.URL, error) {
-	appID := "db9a441fce153ac5701b2235510e4d1b"
-
+func createURL(appID string, city string) (*url.URL, error) {
 	u, err := url.Parse(weatherHost)
 	if err != nil {
 		return nil, fmt.Errorf("createURL parse url error: %w", err)
