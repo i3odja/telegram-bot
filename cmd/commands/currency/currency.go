@@ -54,14 +54,6 @@ func Currency(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 		res += v
 	}
 
-	//for {
-	//	_, err = bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, res))
-	//	if err != nil {
-	//		continue
-	//	}
-	//	return nil
-	//}
-
 	_, err = bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, res))
 	if err != nil {
 		return fmt.Errorf("currency Send error %w", err)
