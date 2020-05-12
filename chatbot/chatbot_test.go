@@ -1,13 +1,16 @@
-package chatbot
+package chatbot_test
 
 import (
-	"fmt"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	"../chatbot"
+	"../cmd/commands/greeter"
 	"../model"
+
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )
 
@@ -29,23 +32,35 @@ func TestSetupUserInfo(t *testing.T) {
 		LanguageCode: "uk",
 	}
 
-	get, err := SetupUserInfo(user)
+	get, err := greeter.SetupUserInfo(user)
 	require.NoError(t, err)
 
 	assert.Equal(t, expected, get)
 }
 
+func TestCreateNewBotConnectionError(t *testing.T) {
+	_, err := chatbot.CreateNewBotConnection()
+	require.Error(t, err)
+
+	assert.EqualError(t, err, "wrong telegram token =(")
+}
+
+func TestCreateNewBotConnectionUnauthorized(t *testing.T) {
+	os.Setenv("TOKEN_TG_BOT", "1101236908:wrong-token")
+	bot, err := chatbot.CreateNewBotConnection()
+	require.Error(t, err)
+
+	assert.Nil(t, bot)
+
+	assert.EqualError(t, err, "Unauthorized")
+}
+
 func TestCreateNewBotConnectionSuccess(t *testing.T) {
-	bot, err := CreateNewBotConnection("1161561075:AAG6WNCUAgAH0V-l5CG2QGo5smCzELERSow")
+	os.Setenv("TOKEN_TG_BOT", "1101236908:AAGdRKCvt8EzpByAFjPKnof-gYKjdTE9jVM")
+	bot, err := chatbot.CreateNewBotConnection()
 	require.NoError(t, err)
 
 	assert.NotNil(t, bot)
-}
-
-func TestCreateNewBotConnectionError(t *testing.T) {
-	_, err := CreateNewBotConnection("21161561075:AAG6WNCUAgAH0V-l5CG2QGo5smCzELERSow")
-
-	assert.EqualError(t, fmt.Errorf("CreateNewBotConnection error Unauthorized"), err.Error())
 }
 
 func TestCreateReply(t *testing.T) {
@@ -83,10 +98,18 @@ func TestCreateReply(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			get := CreateReply(tt.user)
+			get := greeter.CreateReply(tt.user)
 			if get != tt.expected {
 				t.Errorf("want %v but got %v", tt.expected, get)
 			}
 		})
 	}
+}
+
+func TestSetupToken(t *testing.T) {
+	os.Setenv("TOKEN_TG_BOT", "1101236908:AAGdRKCvt8EzpByAFjPKnof-gYKjdTE9jVM")
+
+	token, err := chatbot.SetupToken()
+	require.NoError(t, err)
+	assert.Equal(t, "1101236908:AAGdRKCvt8EzpByAFjPKnof-gYKjdTE9jVM", token)
 }

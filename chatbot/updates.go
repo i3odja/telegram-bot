@@ -31,7 +31,6 @@ func GetUpdates(bot *tgbotapi.BotAPI) error {
 
 			}
 
-			fmt.Println("BUTTON")
 			_, err = bot.Send(tgbotapi.NewMessage(update.CallbackQuery.Message.Chat.ID, update.CallbackQuery.Data))
 			if err != nil {
 				return fmt.Errorf("getUpdates Send error %v", err)
@@ -40,7 +39,6 @@ func GetUpdates(bot *tgbotapi.BotAPI) error {
 
 		if update.Message != nil {
 			err := SelectCommandsList(bot, &update)
-			//err := commands.Buttons(bot, &update)
 			if err != nil {
 				return fmt.Errorf("getUpdates %w", err)
 			}

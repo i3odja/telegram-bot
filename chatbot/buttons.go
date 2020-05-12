@@ -6,7 +6,7 @@ import (
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )
 
-func Buttons(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
+func KeyboardButtons(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 	keys := tgbotapi.NewInlineKeyboardMarkup(
 		tgbotapi.NewInlineKeyboardRow(
 			tgbotapi.NewInlineKeyboardButtonData("Показати всі команди", "/help"),

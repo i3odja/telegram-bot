@@ -15,7 +15,7 @@ const (
 )
 
 func Greeter(bot *tgbotapi.BotAPI, update tgbotapi.Update) error {
-	userInfo, err := setupUserInfo(update.Message.From)
+	userInfo, err := SetupUserInfo(update.Message.From)
 	if err != nil {
 		log.Println("SetupUserInfo error")
 	}
@@ -39,8 +39,8 @@ func CreateReply(userInfo *model.User) string {
 	}
 }
 
-// setupUserInfo setups info about user
-func setupUserInfo(user *tgbotapi.User) (*model.User, error) {
+// SetupUserInfo setups info about user
+func SetupUserInfo(user *tgbotapi.User) (*model.User, error) {
 	return &model.User{
 		ID:           user.ID,
 		Login:        user.UserName,

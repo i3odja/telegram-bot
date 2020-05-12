@@ -41,10 +41,10 @@ func SelectCommandsList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 		err := CommandList(bot, update)
 		return checkError(err)
 	case "buttons":
-		err := Buttons(bot, update)
+		err := KeyboardButtons(bot, update)
 		return checkError(err)
 	default:
-		err := replyForCommands(bot, update, "I'm waiting for your commands. I will help you!")
+		err := replyUnknownCommand(bot, update, "I'm waiting for your commands. I will help you!")
 		return checkError(err)
 	}
 }
@@ -61,16 +61,16 @@ func CommandList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 
 	_, err := bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, help))
 	if err != nil {
-		return fmt.Errorf("replyForCommands Send error %w", err)
+		return fmt.Errorf("replyUnknownCommand Send error %w", err)
 	}
 
 	return nil
 }
 
-func replyForCommands(bot *tgbotapi.BotAPI, update *tgbotapi.Update, text string) error {
+func replyUnknownCommand(bot *tgbotapi.BotAPI, update *tgbotapi.Update, text string) error {
 	_, err := bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, text))
 	if err != nil {
-		return fmt.Errorf("replyForCommands Send error %w", err)
+		return fmt.Errorf("replyUnknownCommand Send error %w", err)
 	}
 
 	return nil
@@ -78,7 +78,7 @@ func replyForCommands(bot *tgbotapi.BotAPI, update *tgbotapi.Update, text string
 
 func checkError(err error) error {
 	if err != nil {
-		return fmt.Errorf("SelectCommandsList %w", err)
+		return fmt.Errorf("SelectCommandsList error %w", err)
 	}
 
 	return nil

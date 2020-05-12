@@ -2,18 +2,18 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"../chatbot"
 )
 
-const (
-	debugMode = true
-)
+const debugMode = true
 
 func main() {
+	os.Setenv("TOKEN_TG_BOT", "1101236908:AAGdRKCvt8EzpByAFjPKnof-gYKjdTE9jVM")
 	bot, err := chatbot.CreateNewBotConnection()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("cannot connect to bot %w", err)
 	}
 
 	// use bot.Debug equal to false to switch off debug mode
