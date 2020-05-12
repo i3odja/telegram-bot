@@ -2,45 +2,30 @@ package chatbot
 
 import (
 	"fmt"
+	"os"
 
-	"../model"
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
-)
-
-const (
-	welcomeMessageUK = "Привіт %s! Як у тебе справи?"
-	welcomeMessageEN = "Hello %s! How are you?"
 )
 
 // CreateNewBotConnection creates new connection to bot
 // It passes token as argument and returns bot
-func CreateNewBotConnection(token string) (*tgbotapi.BotAPI, error) {
+func CreateNewBotConnection() (*tgbotapi.BotAPI, error) {
+	token, err := SetupToken()
+	if err != nil {
+		return nil, err
+	}
+
 	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
-		return nil, fmt.Errorf("CreateNewBotConnection error %w", err)
+		return nil, err
 	}
 
 	return bot, nil
 }
 
-// SetupUserInfo setups info about user
-func SetupUserInfo(user *tgbotapi.User) (*model.User, error) {
-	return &model.User{
-		ID:           user.ID,
-		Login:        user.UserName,
-		FirstName:    user.FirstName,
-		LastName:     user.LastName,
-		LanguageCode: user.LanguageCode,
-	}, nil
-}
-
-// CreatReply creates reply to user
-// It checks what language is using user in order to create welcome message that can understand user
-func CreateReply(userInfo *model.User) string {
-	switch userInfo.LanguageCode {
-	case "uk":
-		return fmt.Sprintf(welcomeMessageUK, userInfo.FirstName)
-	default:
-		return fmt.Sprintf(welcomeMessageEN, userInfo.FirstName)
+func SetupToken() (string, error) {
+	if os.Getenv("TOKEN_TG_BOT") == "" {
+		return "", fmt.Errorf("wrong telegram token =(")
 	}
+	return os.Getenv("TOKEN_TG_BOT"), nil
 }
