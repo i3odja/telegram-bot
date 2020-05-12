@@ -28,13 +28,15 @@ func GetUpdates(bot *tgbotapi.BotAPI) error {
 			_, err := bot.AnswerCallbackQuery(tgbotapi.NewCallback(update.CallbackQuery.ID, update.CallbackQuery.Data))
 			if err != nil {
 				return fmt.Errorf("getUpdates AnswerCallbackQuery error %v", err)
-
 			}
 
-			_, err = bot.Send(tgbotapi.NewMessage(update.CallbackQuery.Message.Chat.ID, update.CallbackQuery.Data))
+			m, err := bot.Send(tgbotapi.NewMessage(update.CallbackQuery.Message.Chat.ID, update.CallbackQuery.Data))
 			if err != nil {
 				return fmt.Errorf("getUpdates Send error %v", err)
 			}
+
+			update.Message = update.CallbackQuery.Message
+			update.Message = &m
 		}
 
 		if update.Message != nil {

@@ -20,6 +20,11 @@ func Greeter(bot *tgbotapi.BotAPI, update tgbotapi.Update) error {
 		log.Println("SetupUserInfo error")
 	}
 
+	if userInfo != nil && update.CallbackQuery != nil {
+		userInfo.FirstName = update.CallbackQuery.From.FirstName
+		userInfo.LanguageCode = update.CallbackQuery.From.LanguageCode
+	}
+
 	_, err = bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, CreateReply(userInfo)))
 	if err != nil {
 		return fmt.Errorf("greeter Send error %w", err)

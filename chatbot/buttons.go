@@ -12,15 +12,16 @@ func KeyboardButtons(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 			tgbotapi.NewInlineKeyboardButtonData("Показати всі команди", "/help"),
 		),
 		tgbotapi.NewInlineKeyboardRow(
+			tgbotapi.NewInlineKeyboardButtonData("Привітатися зі мною", "/hello"),
+			tgbotapi.NewInlineKeyboardButtonData("Звіт по корона-вірусі", "/covid"),
+		),
+		tgbotapi.NewInlineKeyboardRow(
 			tgbotapi.NewInlineKeyboardButtonData("Прогноз погоди", "/weather"),
 			tgbotapi.NewInlineKeyboardButtonData("Курс валют", "/currency"),
 		),
 		tgbotapi.NewInlineKeyboardRow(
 			tgbotapi.NewInlineKeyboardButtonData("Жарти про Чак Норіса", "/joke"),
 			tgbotapi.NewInlineKeyboardButtonData("Показати зображення", "/picture"),
-		),
-		tgbotapi.NewInlineKeyboardRow(
-			tgbotapi.NewInlineKeyboardButtonData("Звіт по корона-вірусі", "/covid"),
 		),
 	)
 
