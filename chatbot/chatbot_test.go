@@ -56,7 +56,7 @@ func TestCreateNewBotConnectionUnauthorized(t *testing.T) {
 }
 
 func TestCreateNewBotConnectionSuccess(t *testing.T) {
-	os.Setenv("TOKEN_TG_BOT", "1101236908:AAEgW4h902L8rceydRd0FmF3kMPWnCTNEaw")
+	os.Setenv("TOKEN_TG_BOT", "1101236908:AAFJNylLX5OjrjntnQLNvzN6HMOS8Gm9pB0")
 	bot, err := chatbot.CreateNewBotConnection()
 	require.NoError(t, err)
 
