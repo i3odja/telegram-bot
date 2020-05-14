@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"../../../model"
+	"github.com/i3odja/telegram-bot/model"
 
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )

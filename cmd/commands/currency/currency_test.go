@@ -3,10 +3,10 @@ package currency_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/i3odja/telegram-bot/cmd/commands/currency"
+	"github.com/i3odja/telegram-bot/model"
 
-	"../../../model"
-	"../../commands/currency"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMakeReplyCurrency(t *testing.T) {

@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"../chatbot"
+	"github.com/i3odja/telegram-bot/chatbot"
 )
 
 const debugMode = true
