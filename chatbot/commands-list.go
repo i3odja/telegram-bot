@@ -3,14 +3,21 @@ package chatbot
 import (
 	"fmt"
 
-	"../cmd/commands/covid"
-	"../cmd/commands/currency"
-	"../cmd/commands/greeter"
-	"../cmd/commands/joke"
-	"../cmd/commands/picture"
-	"../cmd/commands/weather"
+	//"../cmd/commands/covid"
+	//"../cmd/commands/currency"
+	//"../cmd/commands/greeter"
+	//"../cmd/commands/joke"
+	//"../cmd/commands/picture"
+	//"../cmd/commands/weather"
 
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
+
+	"github.com/i3odja/telegram-bot/cmd/commands/covid"
+	"github.com/i3odja/telegram-bot/cmd/commands/currency"
+	"github.com/i3odja/telegram-bot/cmd/commands/greeter"
+	"github.com/i3odja/telegram-bot/cmd/commands/joke"
+	"github.com/i3odja/telegram-bot/cmd/commands/picture"
+	"github.com/i3odja/telegram-bot/cmd/commands/weather"
 )
 
 func SelectCommandsList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {

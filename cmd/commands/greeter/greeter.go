@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"log"
 
-	"../../../model"
+	//"../../../model"
 
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
+
+	"github.com/i3odja/telegram-bot/model"
 )
 
 const (
