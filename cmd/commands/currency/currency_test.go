@@ -7,8 +7,6 @@ import (
 	"github.com/i3odja/telegram-bot/model"
 
 	"github.com/stretchr/testify/assert"
-	//"../../../model"
-	//"../../commands/currency"
 )
 
 func TestMakeReplyCurrency(t *testing.T) {

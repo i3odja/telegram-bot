@@ -10,10 +10,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	//"../chatbot"
-	"../cmd/commands/greeter"
-	//"../model"
-
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )
 
@@ -59,7 +55,7 @@ func TestCreateNewBotConnectionUnauthorized(t *testing.T) {
 }
 
 func TestCreateNewBotConnectionSuccess(t *testing.T) {
-	os.Setenv("TOKEN_TG_BOT", "1101236908:AAGdRKCvt8EzpByAFjPKnof-gYKjdTE9jVM")
+	os.Setenv("TOKEN_TG_BOT", "1101236908:AAFJNylLX5OjrjntnQLNvzN6HMOS8Gm9pB0")
 	bot, err := chatbot.CreateNewBotConnection()
 	require.NoError(t, err)
 

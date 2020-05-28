@@ -6,13 +6,10 @@ import (
 	"net/url"
 	"time"
 
-	//"../../../model"
-	//"../helper"
-
-	tgbotapi "github.com/Syfaro/telegram-bot-api"
-
 	"github.com/i3odja/telegram-bot/cmd/commands/helper"
 	"github.com/i3odja/telegram-bot/model"
+
+	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )
 
 const covid19URL = "api.covid19api.com/dayone/country/ukraine/status/confirmed/live"

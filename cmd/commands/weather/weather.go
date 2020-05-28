@@ -7,13 +7,10 @@ import (
 	"os"
 	"time"
 
-	//"../../../model"
-	//"../helper"
-
-	tgbotapi "github.com/Syfaro/telegram-bot-api"
-
 	"github.com/i3odja/telegram-bot/cmd/commands/helper"
 	"github.com/i3odja/telegram-bot/model"
+
+	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )
 
 const (

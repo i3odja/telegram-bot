@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"github.com/i3odja/telegram-bot/chatbot"
 )
@@ -10,7 +9,6 @@ import (
 const debugMode = true
 
 func main() {
-	os.Setenv("TOKEN_TG_BOT", "1101236908:AAFJNylLX5OjrjntnQLNvzN6HMOS8Gm9pB0")
 	bot, err := chatbot.CreateNewBotConnection()
 	if err != nil {
 		log.Fatal("cannot connect to bot %w", err)
