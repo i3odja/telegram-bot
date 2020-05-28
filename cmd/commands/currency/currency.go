@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	currencyURL = "bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json"
+	currencyURL = "bank.gov.ua/NBUStatService/v1/statdirectory/exchange"
 
 	currencyFormatUSD = "🇺🇸 %v"
 	currencyFormatEUR = "🇪🇺 %v"
@@ -27,31 +27,39 @@ const (
 
 // Currency get actual currency USD, EUR, RUB and PLN
 func Currency(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
-	urlCurrency, err := url.Parse(currencyURL)
-	if err != nil {
-		return fmt.Errorf("currency Parse error %w", err)
-	}
+	values := []string{"EUR", "USD", "RUB", "PLN"}
 
-	jsonCurrency, err := helper.SendRequest(urlCurrency)
-	if err != nil {
-		return fmt.Errorf("currency sendRequest error %w", err)
-	}
+	res := ""
+	jsonCurrency := make([][]byte, 0)
 
-	dataCurrency := make([]model.Currency, 1)
-
-	err = json.Unmarshal(jsonCurrency, &dataCurrency)
-	if err != nil {
-		return fmt.Errorf("currency JSON Unmarshal error %w", err)
-	}
-
-	_, err = bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, currencyMessage))
+	_, err := bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, currencyMessage))
 	if err != nil {
 		return fmt.Errorf("currency Send error %w", err)
 	}
+	for i, v := range values {
+		u, err := createCurrencyURL(v)
+		if err != nil {
+			return fmt.Errorf("jsonParse createURL error %w", err)
+		}
 
-	res := fmt.Sprintf(currencyCaption, dataCurrency[0].Exchangedate)
-	for _, v := range MakeReplyCurrency(dataCurrency) {
-		res += v
+		jsonCurrencyItem, err := helper.SendRequest(u)
+		if err != nil {
+			return fmt.Errorf("currency sendRequest error %w", err)
+		}
+
+		jsonCurrency = append(jsonCurrency, jsonCurrencyItem)
+
+		dataCurrency := make([]model.Currency, len(values))
+
+		err = json.Unmarshal(jsonCurrency[i], &dataCurrency)
+		fmt.Println(&dataCurrency)
+		if err != nil {
+			return fmt.Errorf("currency JSON Unmarshal error %w", err)
+		}
+
+		for _, v := range MakeReplyCurrency(dataCurrency) {
+			res += v
+		}
 	}
 
 	_, err = bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, res))
@@ -88,4 +96,23 @@ func MakeReplyCurrency(data []model.Currency) (reply []string) {
 	}
 
 	return
+}
+
+func createCurrencyURL(value string) (*url.URL, error) {
+	u, err := url.Parse(currencyURL)
+	if err != nil {
+		return nil, fmt.Errorf("createURL parse url error: %w", err)
+	}
+
+	q, err := url.ParseQuery(u.RawQuery)
+	if err != nil {
+		return nil, fmt.Errorf("createURL parse url query error: %w", err)
+	}
+
+	q.Set("valcode", value)
+	q.Set("json", "")
+
+	u.RawQuery = q.Encode()
+
+	return u, nil
 }
