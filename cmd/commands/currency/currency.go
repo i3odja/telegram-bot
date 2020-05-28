@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
-	
+
 	"github.com/i3odja/telegram-bot/cmd/commands/helper"
 	"github.com/i3odja/telegram-bot/model"
 
@@ -19,8 +19,6 @@ const (
 	currencyFormatRUB = "🇷🇺 %v"
 	currencyFormatPLN = "🇵🇱 %v"
 	currencyRate      = "Курс: %v\n\n"
-
-	currencyCaption = "Станом на %v\n\n"
 
 	currencyMessage = "💵 Ваш курс валют на сьогодні готовий!"
 )

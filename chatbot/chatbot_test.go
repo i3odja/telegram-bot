@@ -4,12 +4,11 @@ import (
 	"os"
 	"testing"
 
+	"github.com/i3odja/telegram-bot/chatbot"
+	"github.com/i3odja/telegram-bot/model"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/i3odja/telegram-bot/chatbot"
-	"github.com/i3odja/telegram-bot/cmd/commands/greeter"
-	"github.com/i3odja/telegram-bot/model"
 
 	tgbotapi "github.com/Syfaro/telegram-bot-api"
 )

@@ -50,14 +50,25 @@ func SelectCommandsList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
 }
 
 func CommandList(bot *tgbotapi.BotAPI, update *tgbotapi.Update) error {
-	help := fmt.Sprintf("/buttons - I will show you all commands buttons!\n")
-	help += fmt.Sprintf("/help - I will show you all available commands!\n")
-	help += fmt.Sprintf("/hello - I want to say hello to you!\n")
-	help += fmt.Sprintf("/weather - I want to show you the weather!\n")
-	help += fmt.Sprintf("/joke - I want to show you very funny Joke!\n")
-	help += fmt.Sprintf("/picture - I want to show you very interesting Picture!\n")
-	help += fmt.Sprintf("/currency - I want to show you the current currency!\n")
-	help += fmt.Sprintf("/covid - I want to show all cases of covid-19 on yesterday!\n")
+	help := fmt.Sprintf("Hello, I'm your personal bot!\n")
+	help += fmt.Sprintf("\n")
+
+	help += fmt.Sprintf("Please, use the following commands:\n")
+	help += fmt.Sprintf("\n")
+
+	help += fmt.Sprintf("/buttons - ☑️ I will show you all commands like buttons!\n")
+	help += fmt.Sprintf("/help - ❓ I will show you all available commands!\n")
+	help += fmt.Sprintf("\n")
+
+	help += fmt.Sprintf("/hello - 👋 I want to say hello to you!\n")
+	help += fmt.Sprintf("/weather - 🌤 I want to show you the weather! By default I will show forecast for Lviv. If You want to get forecast for another city, please use the next format:\n")
+	help += fmt.Sprintf("    /weather <city>\n")
+	help += fmt.Sprintf("    for example: /weather Kyiv or /weather Київ\n")
+
+	help += fmt.Sprintf("/joke - 😂 I want to show you very funny Joke!\n")
+	help += fmt.Sprintf("/picture - 🌄 I want to show you very interesting Picture!\n")
+	help += fmt.Sprintf("/currency - 💰 I want to show you the current currency!\n")
+	help += fmt.Sprintf("/covid - \U0001F9A0 I want to show all cases of covid-19 on yesterday!\n")
 
 	_, err := bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID, help))
 	if err != nil {

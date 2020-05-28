@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/i3odja/telegram-bot/chatbot"
 	"log"
+
+	"github.com/i3odja/telegram-bot/chatbot"
 )
 
 const debugMode = true
