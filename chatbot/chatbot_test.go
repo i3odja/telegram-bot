@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/i3odja/telegram-bot/chatbot"
+	"github.com/i3odja/telegram-bot/cmd/commands/greeter"
 	"github.com/i3odja/telegram-bot/model"
 
 	"github.com/stretchr/testify/assert"
