@@ -1,2 +1,2 @@
 # telegram-bot
-training telegram bot with some functions
+training telegram bot with some functions.
